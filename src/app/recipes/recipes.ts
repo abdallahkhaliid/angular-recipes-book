@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RecipeList } from './recipe-list/recipe-list';
 import { RecipeDetails } from './recipe-details/recipe-details';
 import { Recipe } from './recipe.model';
 import { CommonModule } from '@angular/common';
+import { RecipeService } from '../services/recipe';
 
 @Component({
   selector: 'app-recipes',
@@ -11,10 +12,18 @@ import { CommonModule } from '@angular/common';
   styleUrl: './recipes.scss',
   standalone: true,
 })
-export class Recipes {
+export class Recipes implements OnInit {
   selectedRecipe?: Recipe;
 
-  onRecipeSelected(recipe: Recipe) {
-    this.selectedRecipe = recipe;
+  constructor(private recipeService: RecipeService) {}
+
+  ngOnInit(): void {
+    this.recipeService.recipeSelected.subscribe((recipe: Recipe) => {
+      this.selectedRecipe = recipe;
+    });
   }
+
+  // onRecipeSelected(recipe: Recipe) {
+  //   this.selectedRecipe = recipe;
+  // }
 }

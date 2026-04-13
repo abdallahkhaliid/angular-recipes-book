@@ -1,6 +1,10 @@
 @if (recipe) {
   <div class="row">
-    <a href="#" class="card h-100 recipe-card shadow-sm text-decoration-none">
+    <a
+      href="#"
+      class="card h-100 recipe-card shadow-sm text-decoration-none"
+      (click)="onRecipeSelected(recipe); $event.preventDefault()"
+    >
       <div class="card-img-container">
         <img [src]="recipe.imagePath" [alt]="recipe.name" class="card-img-top" />
       </div>

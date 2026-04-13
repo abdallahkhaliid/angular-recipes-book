@@ -6,11 +6,7 @@
 
 <div class="row">
   <br />
-  <div
-    class="col-lg-4 col-md-8 mb-4"
-    (click)="onRecipeSelected(recipe)"
-    *ngFor="let recipe of recipes"
-  >
+  <div class="col-lg-4 col-md-8 mb-4" *ngFor="let recipe of recipes">
     <app-recipe-item [recipe]="recipe"></app-recipe-item>
   </div>
 </div>

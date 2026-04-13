@@ -1,7 +1,8 @@
-import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { ShoppingEdit } from './shopping-edit/shopping-edit';
 import { Ingredients } from '../../shared/ingredients.model';
 import { CommonModule } from '@angular/common';
+import { ShoppingListService } from '../services/shopping-list';
 
 @Component({
   selector: 'app-shopping-list',
@@ -10,21 +11,29 @@ import { CommonModule } from '@angular/common';
   styleUrl: './shopping-list.scss',
   standalone: true,
 })
-export class ShoppingList {
-  ingredients: Ingredients[] = [new Ingredients('Apple', 5), new Ingredients('Banana', 10)];
+export class ShoppingList implements OnInit {
+  ingredients: Ingredients[] = [];
 
+  // Dependency Injection
+  constructor(private shoppingListService: ShoppingListService) {}
+
+  // OnInit interface
+  ngOnInit(): void {
+    this.ingredients = this.shoppingListService.getIngredients();
+  }
+
+  // onIngredientAdded event using service
   onIngredientAdded(ingredient: Ingredients) {
-    this.ingredients.push(ingredient);
+    this.shoppingListService.addIngredient(ingredient);
   }
 
+  // onIngredientDeleted event using service
   onIngredientDeleted(ingredient: Ingredients) {
-    const index = this.ingredients.findIndex((ingredient) => ingredient.name === ingredient.name);
-    if (index !== -1) {
-      this.ingredients.splice(index, 1);
-    }
+    this.shoppingListService.deleteIngredient(ingredient);
   }
 
+  // onIngredientCleared event using service
   onIngredientCleared() {
-    this.ingredients = [];
+    this.shoppingListService.clearIngredients();
   }
 }
