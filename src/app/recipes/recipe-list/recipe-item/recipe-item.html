@@ -1,1 +1,13 @@
-<p>recipe-item works!</p>
+@if (recipe) {
+  <div class="row">
+    <a href="#" class="card h-100 recipe-card shadow-sm text-decoration-none">
+      <div class="card-img-container">
+        <img [src]="recipe.imagePath" [alt]="recipe.name" class="card-img-top" />
+      </div>
+      <div class="card-body">
+        <h5 class="card-title font-weight-bold">{{ recipe.name }}</h5>
+        <p class="card-text text-secondary">{{ recipe.description }}</p>
+      </div>
+    </a>
+  </div>
+}
