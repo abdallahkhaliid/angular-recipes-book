@@ -4,10 +4,11 @@ import { RecipeDetails } from './recipe-details/recipe-details';
 import { Recipe } from './recipe.model';
 import { CommonModule } from '@angular/common';
 import { RecipeService } from '../services/recipe';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-recipes',
-  imports: [RecipeList, RecipeDetails, CommonModule],
+  imports: [RecipeList, RouterOutlet, CommonModule],
   templateUrl: './recipes.html',
   styleUrl: './recipes.scss',
   standalone: true,
