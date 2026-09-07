@@ -2,6 +2,7 @@ import { EventEmitter, Injectable, OnInit } from '@angular/core';
 import { Recipe } from '../recipes/recipe.model';
 import { Ingredients } from '../../shared/ingredients.model';
 import { ShoppingListService } from './shopping-list';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -26,7 +27,8 @@ export class RecipeService implements OnInit {
 
   ngOnInit(): void {}
 
-  recipeSelected = new EventEmitter<Recipe>();
+  // (Subject) to make the component communicate with each other
+  recipeSelected = new Subject<Recipe>();
 
   getRecipes() {
     return this.recipes;
