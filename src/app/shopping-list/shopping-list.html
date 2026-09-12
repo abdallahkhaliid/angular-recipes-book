@@ -1,12 +1,35 @@
-<div class="row">
-  <div class="col-md-10">
-    <app-shopping-edit></app-shopping-edit>
-    <hr />
+<div class="shopping-list-wrapper">
+  <div class="list-header">
+    <div>
+      <h3 class="list-title">Shopping List</h3>
+      <p class="list-subtitle">Your ingredients in one place</p>
+    </div>
+    <span class="count-badge"
+      >{{ ingredients.length }} {{ ingredients.length === 1 ? 'item' : 'items' }}</span
+    >
+  </div>
 
-    <ul class="list-group">
-      <a href="#" class="list-group-item" *ngFor="let ingredient of ingredients"
-        >{{ ingredient.name }} - {{ ingredient.amount }}</a
+  <app-shopping-edit></app-shopping-edit>
+
+  <div class="ingredients-card" *ngIf="ingredients.length > 0; else emptyState">
+    <ul class="ingredients-list">
+      <li
+        class="ingredient-item"
+        *ngFor="let ingredient of ingredients; let i = index"
+        (click)="onEditItem(i)"
       >
+        <span class="item-index">{{ i + 1 }}</span>
+        <span class="item-name">{{ ingredient.name }}</span>
+        <span class="item-amount">{{ ingredient.amount }}</span>
+      </li>
     </ul>
   </div>
+
+  <ng-template #emptyState>
+    <div class="empty-state">
+      <div class="empty-icon">🧺</div>
+      <p class="empty-title">Your list is empty</p>
+      <p class="empty-text">Add your first ingredient above to get started.</p>
+    </div>
+  </ng-template>
 </div>

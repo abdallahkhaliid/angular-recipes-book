@@ -1,8 +1,9 @@
-import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ShoppingEdit } from './shopping-edit/shopping-edit';
 import { Ingredients } from '../../shared/ingredients.model';
 import { CommonModule } from '@angular/common';
 import { ShoppingListService } from '../services/shopping-list';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-shopping-list',
@@ -11,8 +12,9 @@ import { ShoppingListService } from '../services/shopping-list';
   styleUrl: './shopping-list.scss',
   standalone: true,
 })
-export class ShoppingList implements OnInit {
+export class ShoppingList implements OnInit, OnDestroy {
   ingredients: Ingredients[] = [];
+  private ingredientsSub!: Subscription;
 
   // Dependency Injection
   constructor(private shoppingListService: ShoppingListService) {}
@@ -20,6 +22,15 @@ export class ShoppingList implements OnInit {
   // OnInit interface
   ngOnInit(): void {
     this.ingredients = this.shoppingListService.getIngredients();
+    this.ingredientsSub = this.shoppingListService.ingredientsChanged.subscribe(
+      (ingredients: Ingredients[]) => {
+        this.ingredients = ingredients;
+      },
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.ingredientsSub.unsubscribe();
   }
 
   // onIngredientAdded event using service
@@ -35,5 +46,9 @@ export class ShoppingList implements OnInit {
   // onIngredientCleared event using service
   onIngredientCleared() {
     this.shoppingListService.clearIngredients();
+  }
+
+  onEditItem(index: number) {
+    this.shoppingListService.startedEditing.next(index);
   }
 }
