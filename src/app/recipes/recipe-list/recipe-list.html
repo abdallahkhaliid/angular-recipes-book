@@ -1,12 +1,25 @@
-<div class="row">
-  <div class="col-md-12">
-    <button class="btn btn-success" (click)="onNewRecipe()">New Recipe</button>
+<div class="recipe-list-wrapper">
+  <div class="list-header">
+    <div>
+      <h3 class="list-title">Recipes</h3>
+      <p class="list-subtitle">
+        {{ recipes.length }} {{ recipes.length === 1 ? 'recipe' : 'recipes' }} to explore
+      </p>
+    </div>
+    <button class="btn-new" (click)="onNewRecipe()">+ New Recipe</button>
   </div>
-</div>
 
-<div class="row">
-  <br />
-  <div class="col-lg-4 col-md-8 mb-4" *ngFor="let recipe of recipes; let i = index">
-    <app-recipe-item [recipe]="recipe" [index]="i"></app-recipe-item>
+  <div class="recipe-grid" *ngIf="recipes.length > 0; else emptyRecipes">
+    <div class="recipe-grid-item" *ngFor="let recipe of recipes; let i = index">
+      <app-recipe-item [recipe]="recipe" [index]="i"></app-recipe-item>
+    </div>
   </div>
+
+  <ng-template #emptyRecipes>
+    <div class="empty-state">
+      <div class="empty-icon">🍳</div>
+      <p class="empty-title">No recipes yet</p>
+      <p class="empty-text">Create your first recipe to get cooking.</p>
+    </div>
+  </ng-template>
 </div>
