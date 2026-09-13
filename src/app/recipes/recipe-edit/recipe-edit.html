@@ -1,1 +1,100 @@
-<p>recipe-edit works!</p>
+<div class="recipe-edit-card">
+  <div class="card-header-row">
+    <div>
+      <h5 class="card-title">{{ editMode ? 'Edit Recipe' : 'New Recipe' }}</h5>
+      <span class="card-subtitle">
+        {{ editMode ? 'Update the recipe details below' : 'Fill in the details for your new recipe' }}
+      </span>
+    </div>
+    <div class="header-actions">
+      <button
+        type="submit"
+        form="recipeForm"
+        class="btn btn-save"
+        [disabled]="!recipeForm.valid"
+      >
+        Save
+      </button>
+      <button type="button" class="btn btn-cancel" (click)="onCancel()">Cancel</button>
+    </div>
+  </div>
+
+  <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()" id="recipeForm">
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input
+        type="text"
+        id="name"
+        class="form-control"
+        formControlName="name"
+        placeholder="e.g. Spaghetti Bolognese"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="imagePath">Image URL</label>
+      <input
+        type="text"
+        id="imagePath"
+        class="form-control"
+        formControlName="imagePath"
+        placeholder="https://example.com/recipe.jpg"
+        #imagePath
+      />
+    </div>
+
+    @if (imagePath.value) {
+      <div class="image-preview">
+        <img [src]="imagePath.value" alt="Recipe preview" />
+      </div>
+    }
+
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea
+        id="description"
+        class="form-control"
+        formControlName="description"
+        rows="6"
+        placeholder="Describe your recipe..."
+      ></textarea>
+    </div>
+
+    <div formArrayName="ingredients">
+      <div class="ingredients-header">
+        <label>Ingredients</label>
+        <button type="button" class="btn btn-add-ing" (click)="onAddIngredient()">
+          + Add Ingredient
+        </button>
+      </div>
+
+      @for (ingredientCtrl of ingredientsControls; track $index; let i = $index) {
+        <div [formGroupName]="i" class="ingredient-row">
+          <input
+            type="text"
+            class="form-control"
+            formControlName="name"
+            placeholder="Name (e.g. Sugar)"
+          />
+          <input
+            type="number"
+            class="form-control amount-input"
+            formControlName="amount"
+            placeholder="Amount"
+            min="1"
+          />
+          <button
+            type="button"
+            class="btn btn-delete-ing"
+            (click)="onDeleteIngredient(i)"
+            title="Delete ingredient"
+          >
+            ✕
+          </button>
+        </div>
+      } @empty {
+        <p class="muted">No ingredients yet. Click "Add Ingredient" to add one.</p>
+      }
+    </div>
+  </form>
+</div>

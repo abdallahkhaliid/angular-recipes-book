@@ -1,9 +1,10 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RecipeItem } from './recipe-item/recipe-item';
 import { Recipe } from '../recipe.model';
 import { RecipeService } from '../../services/recipe';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-recipe-list',
@@ -14,9 +15,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 
 // Implement OnInit interface
-export class RecipeList implements OnInit {
+export class RecipeList implements OnInit, OnDestroy {
   @Output() recipeSelected = new EventEmitter<Recipe>();
   recipes: Recipe[] = [];
+  private recipesSub!: Subscription;
 
   // Dependency Injection
   constructor(
@@ -28,6 +30,13 @@ export class RecipeList implements OnInit {
   // OnInit interface
   ngOnInit(): void {
     this.recipes = this.recipeService.getRecipes();
+    this.recipesSub = this.recipeService.recipesChanged.subscribe((recipes: Recipe[]) => {
+      this.recipes = recipes;
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.recipesSub.unsubscribe();
   }
 
   // onRecipeSelected(recipe: Recipe) {
