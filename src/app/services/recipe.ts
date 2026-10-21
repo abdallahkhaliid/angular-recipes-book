@@ -35,6 +35,11 @@ export class RecipeService implements OnInit {
     return this.recipes;
   }
 
+  setRecipes(recipes: Recipe[]) {
+    this.recipes = recipes;
+    this.recipesChanged.next(this.recipes.slice());
+  }
+
   addIngredientsToShoppingList(ingredients: Ingredients[]) {
     this.shoppingListService.addIngredients(ingredients);
   }
