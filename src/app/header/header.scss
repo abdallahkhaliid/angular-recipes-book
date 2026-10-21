@@ -22,7 +22,7 @@
 
     &.active {
       color: #0d6efd !important;
-      
+
       &::after {
         content: '';
         position: absolute;
@@ -45,7 +45,7 @@
     padding: 0.5rem 1.5rem;
     font-weight: 600;
     transition: all 0.3s ease;
-    
+
     &:hover {
       transform: translateY(-2px);
       box-shadow: 0 4px 8px rgba(13, 110, 253, 0.2);
@@ -76,6 +76,7 @@
   padding: 0.6rem 1rem;
   font-weight: 500;
   transition: all 0.2s ease;
+  cursor: pointer;
 
   &:hover {
     background-color: #f8f9fa;

@@ -4,6 +4,7 @@ import { ShoppingList } from './shopping-list/shopping-list';
 import { RecipeStart } from './recipes/recipe-start/recipe-start';
 import { RecipeDetails } from './recipes/recipe-details/recipe-details';
 import { RecipeEdit } from './recipes/recipe-edit/recipe-edit';
+import { Auth } from './auth/auth';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'recipes', pathMatch: 'full' },
@@ -18,4 +19,5 @@ export const routes: Routes = [
     ],
   },
   { path: 'shopping-list', component: ShoppingList },
+  { path: 'auth', component: Auth },
 ];
