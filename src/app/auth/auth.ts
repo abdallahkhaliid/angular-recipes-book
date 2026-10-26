@@ -1,6 +1,8 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, DestroyRef, inject, signal, ViewChild, ViewContainerRef } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { Alert } from '../alert/alert';
 import { Authentication } from '../services/authentication';
 import { Spinner } from '../shared/spinner/spinner';
 
@@ -15,10 +17,15 @@ export class Auth {
   email = '';
   password = '';
   isLoading = signal(false);
-  errorMessage = signal('');
 
+  private closeSub?: Subscription;
   private authenticationService = inject(Authentication);
   private router = inject(Router);
+  private destroyRef = inject(DestroyRef);
+
+  // @ViewChild('dynamicComponent', { read: ViewContainerRef }) dynamicComponent!: ViewContainerRef;
+
+  @ViewChild('dynamicComponent', { read: ViewContainerRef }) dynamicComponent!: ViewContainerRef;
 
   onSubmit(form: NgForm) {
     if (!form.valid) {
@@ -28,7 +35,6 @@ export class Auth {
     const password = form.value.password;
 
     this.isLoading.set(true);
-    this.errorMessage.set('');
 
     const request$ = this.isLoggedInMode
       ? this.authenticationService.login(email, password)
@@ -43,7 +49,7 @@ export class Auth {
       },
       error: (error) => {
         this.isLoading.set(false);
-        this.errorMessage.set(error.message);
+        this.showErrorAlert(error.message);
         console.error(error.message);
       },
     });
@@ -51,6 +57,29 @@ export class Auth {
 
   onSwitchMode() {
     this.isLoggedInMode = !this.isLoggedInMode;
-    this.errorMessage.set('');
+  }
+
+  private showErrorAlert(message: string) {
+    //   const viewContainerRef = this.dynamicComponent;
+    //   this.closeSub?.unsubscribe();
+    //   viewContainerRef.clear();
+
+    //   const alertComponentRef = viewContainerRef.createComponent(Alert);
+    //   alertComponentRef.setInput('message', message);
+
+    //   this.closeSub = alertComponentRef.instance.close
+    //     .pipe(takeUntilDestroyed(this.destroyRef))
+    //     .subscribe(() => {
+    //       this.closeSub?.unsubscribe();
+    //       viewContainerRef.clear();
+    //     });
+    // }
+    this.dynamicComponent.clear();
+    const componentRef = this.dynamicComponent.createComponent(Alert);
+    componentRef.instance.message = message;
+    this.closeSub = componentRef.instance.close.subscribe(() => {
+      this.closeSub?.unsubscribe();
+      this.dynamicComponent.clear();
+    });
   }
 }

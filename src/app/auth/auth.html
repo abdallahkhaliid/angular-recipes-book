@@ -1,3 +1,6 @@
+<!-- <ng-template #dynamicComponent></ng-template> -->
+<ng-template #dynamicComponent></ng-template>
+
 <div class="row">
   <div class="col-xs-12 col-md-6 offset-3">
     <form #form="ngForm" (ngSubmit)="onSubmit(form)">
@@ -26,11 +29,7 @@
         />
       </div>
 
-      @if (errorMessage()) {
-        <div class="alert alert-danger mt-3" role="alert">
-          {{ errorMessage() }}
-        </div>
-      }
+      <!-- <app-alert [message]="errorMessage()" (close)="onHandleError()" /> -->
 
       <div class="d-flex justify-content-between align-items-center mt-3">
         <button
