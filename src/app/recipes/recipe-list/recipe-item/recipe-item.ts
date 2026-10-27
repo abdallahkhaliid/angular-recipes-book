@@ -1,15 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Recipe } from '../../recipe.model';
-import { CommonModule } from '@angular/common';
 import { RecipeService } from '../../../services/recipe';
-import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-recipe-item',
-  imports: [CommonModule, RouterLink, RouterLinkActive],
   templateUrl: './recipe-item.html',
   styleUrl: './recipe-item.scss',
-  standalone: true,
+  standalone: false,
 })
 export class RecipeItem implements OnInit {
   @Input() recipe?: Recipe;

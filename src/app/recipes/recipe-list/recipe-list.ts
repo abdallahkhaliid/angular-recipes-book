@@ -1,6 +1,4 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RecipeItem } from './recipe-item/recipe-item';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Recipe } from '../recipe.model';
 import { RecipeService } from '../../services/recipe';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -8,15 +6,13 @@ import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-recipe-list',
-  imports: [RecipeItem, CommonModule],
   templateUrl: './recipe-list.html',
   styleUrl: './recipe-list.scss',
-  standalone: true,
+  standalone: false,
 })
 
 // Implement OnInit interface
 export class RecipeList implements OnInit, OnDestroy {
-  @Output() recipeSelected = new EventEmitter<Recipe>();
   recipes: Recipe[] = [];
   private recipesSub!: Subscription;
 

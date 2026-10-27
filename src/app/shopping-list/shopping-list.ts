@@ -1,16 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ShoppingEdit } from './shopping-edit/shopping-edit';
 import { Ingredients } from '../../shared/ingredients.model';
-import { CommonModule } from '@angular/common';
 import { ShoppingListService } from '../services/shopping-list';
 import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-shopping-list',
-  imports: [ShoppingEdit, CommonModule],
   templateUrl: './shopping-list.html',
   styleUrl: './shopping-list.scss',
-  standalone: true,
+  standalone: false,
 })
 export class ShoppingList implements OnInit, OnDestroy {
   ingredients: Ingredients[] = [];

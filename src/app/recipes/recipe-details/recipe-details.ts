@@ -1,15 +1,13 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Recipe } from '../recipe.model';
 import { RecipeService } from '../../services/recipe';
-import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-recipe-details',
-  imports: [CommonModule],
   templateUrl: './recipe-details.html',
   styleUrl: './recipe-details.scss',
-  standalone: true,
+  standalone: false,
 })
 export class RecipeDetails implements OnInit {
   recipe?: Recipe;

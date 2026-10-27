@@ -1,16 +1,15 @@
 import { Component, DestroyRef, inject, signal, ViewChild, ViewContainerRef } from '@angular/core';
-import { FormsModule, NgForm } from '@angular/forms';
+import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Alert } from '../alert/alert';
 import { Authentication } from '../services/authentication';
-import { Spinner } from '../shared/spinner/spinner';
 
 @Component({
   selector: 'app-auth',
-  imports: [FormsModule, Spinner],
   templateUrl: './auth.html',
   styleUrl: './auth.scss',
+  standalone: false,
 })
 export class Auth {
   isLoggedInMode = true;

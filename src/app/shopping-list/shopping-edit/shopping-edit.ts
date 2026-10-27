@@ -1,15 +1,14 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormsModule, NgForm } from '@angular/forms';
+import { NgForm } from '@angular/forms';
 import { Ingredients } from '../../../shared/ingredients.model';
 import { ShoppingListService } from '../../services/shopping-list';
 import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-shopping-edit',
-  imports: [FormsModule],
   templateUrl: './shopping-edit.html',
   styleUrl: './shopping-edit.scss',
-  standalone: true,
+  standalone: false,
 })
 export class ShoppingEdit implements OnInit, OnDestroy {
   subscription!: Subscription;
